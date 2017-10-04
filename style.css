@@ -1,0 +1,32 @@
+
+.game-container {
+  margin: 30px auto;
+  text-align: center;
+  width: 500px;
+}
+
+.row .unit {
+  display: inline-block;
+  vertical-align: top;
+  border: thin black solid;
+  width: 100px;
+  height: 100px;
+}
+
+/* create game board */
+.game-container .row:first-child .unit {
+  border-top: none;
+}
+.game-container .row .unit:last-child {
+  border-right: none;
+}
+.game-container .row:last-child .unit {
+  border-bottom: none;
+}
+.game-container .row .unit:first-child {
+  border-left: none;
+}
+
+.unit:hover {
+  cursor: pointer;
+}
