@@ -1,5 +1,9 @@
+header {
+  margin: 10px auto;
+  text-align: center;
+}
 
-.game-container {
+#prompt, #game-container {
   margin: 30px auto;
   text-align: center;
   width: 500px;
@@ -14,17 +18,21 @@
 }
 
 /* create game board */
-.game-container .row:first-child .unit {
+#game-container .row:first-child .unit {
   border-top: none;
 }
-.game-container .row .unit:last-child {
+#game-container .row .unit:last-child {
   border-right: none;
 }
-.game-container .row:last-child .unit {
+#game-container .row:last-child .unit {
   border-bottom: none;
 }
-.game-container .row .unit:first-child {
+#game-container .row .unit:first-child {
   border-left: none;
+}
+
+.unit {
+  font-size: 100px;
 }
 
 .unit:hover {
