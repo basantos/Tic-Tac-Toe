@@ -3,10 +3,14 @@ header {
   text-align: center;
 }
 
+div {
+  margin: 0 auto;
+  text-align: center;
+}
+
 #prompt, #game-container {
   margin: 30px auto;
   text-align: center;
-  width: 500px;
 }
 
 .row .unit {
