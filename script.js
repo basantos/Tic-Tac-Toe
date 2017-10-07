@@ -25,7 +25,7 @@ function switchTurn(){
   }
 }
 
-var initPlayerButtons = function(){
+function initPlayerButtons(){
   var onePlayerButton = document.getElementById('one-player-button');
   var twoPlayersButton = document.getElementById('two-players-button');
   onePlayerButton.addEventListener('click', function(){
@@ -36,18 +36,30 @@ var initPlayerButtons = function(){
   });
 };
 
-var initGameUnits = function(){
+var board = { 'one': 'empty', 'two': 'empty', 'three': 'empty',
+              'four': 'empty', 'five': 'empty', 'six': 'empty',
+              'seven': 'empty', 'eight': 'empty', 'nine': 'empty'};
+
+function markUnit(unit,idNumber){
+  debugger;
+  if(board[idNumber] === 'empty'){
+    if(playerOnesTurn){
+      unit.innerHTML = 'X';
+      board[idNumber] = 'X';
+    } else {
+      unit.innerHTML = 'O';
+      board[idNumber] = 'O';
+    }
+    switchTurn();
+  }
+}
+
+function initGameUnits(){
   var unitIds = ['one','two','three','four','five','six','seven','eight','nine'];
-  for(var i=0; i<unitIds.length; i++){
-    let unitId = document.getElementById(unitIds[i]);
-    unitId.addEventListener('click',function(){
-      if(playerOnesTurn){
-        unitId.innerHTML = 'X';
-        switchTurn();
-      } else {
-        unitId.innerHTML = 'O';
-        switchTurn();
-      }
+  for(let i=0; i<unitIds.length; i++){
+    let unit = document.getElementById(unitIds[i]);
+    unit.addEventListener('click',function(){
+      markUnit(unit,unitIds[i]);
     });
   }
 }
