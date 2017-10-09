@@ -85,6 +85,9 @@ function checkWinCondition(){
     mainContainer.innerHTML = winningPlayer + ' Win' + '<div><button id="new-game-button">New Game</button></div>';
     var newGameButton = document.getElementById('new-game-button');
     newGameButton.addEventListener('click', function(){
+      board = { 'one': 'empty', 'two': 'empty', 'three': 'empty',
+                    'four': 'empty', 'five': 'empty', 'six': 'empty',
+                    'seven': 'empty', 'eight': 'empty', 'nine': 'empty'};
       initPlayerButtons();
     });
   } else {
