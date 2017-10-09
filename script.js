@@ -1,8 +1,45 @@
 var playerOnesTurn = true;
 var playerTwosTurn = false;
+var cpuIsPlayer = false;
+var cpuMark = null; // Will be set to either X or Y
+var cpuTurn = null;
 var board = { 'one': 'empty', 'two': 'empty', 'three': 'empty',
               'four': 'empty', 'five': 'empty', 'six': 'empty',
               'seven': 'empty', 'eight': 'empty', 'nine': 'empty'};
+
+function assignMarkToCPU(mark){
+  cpuMark = mark;
+  setUpGame();
+}
+
+function changeCPUTurn(){
+  if(cpuMark === 'X'){
+    cpuTurn = playerOnesTurn;
+  } else {
+    cpuTurn = playerTwosTurn;
+  }
+}
+
+function cpuMarksUnit(){
+  // CPU marks based on map
+  console.log('cpu marks unit');
+}
+
+function askXOrY(){
+  var mainContainer = document.getElementById('main-container');
+  mainContainer.innerHTML = '<button id="x-button">X</button> or <button id="o-button">O</button>';
+  var xButton = document.getElementById('x-button');
+  var oButton = document.getElementById('o-button');
+  xButton.addEventListener('click',function(){
+    assignMarkToCPU('O');
+  });
+  oButton.addEventListener('click',function(){
+    assignMarkToCPU('X');
+    // CPU starts game and switches turn
+    cpuMarksUnit();
+    switchTurn();
+  });
+}
 
 function setUpGame(){
   html = "<div><h2 id='show-which-players-turn'>Player One's Turn</h2></div>";
@@ -26,9 +63,18 @@ function switchTurn(){
   } else {
     showWhichPlayersTurn.innerHTML = "Player One's Turn";
   }
+
+  changeCPUTurn();
+  if(cpuIsPlayer && cpuTurn){
+    cpuMarksUnit();
+    switchTurn();
+  }
 }
 
 function initPlayerButtons(){
+  cpuIsPlayer = false;
+  cpuMark = null;
+  cpuTurn = null;
   // add buttons html
   var mainContent = document.getElementById('main-container');
   var htmlOfPromptButtons = '<button id="one-player-button">1 Player</button><button id="two-players-button">2 Players</button>';
@@ -37,7 +83,8 @@ function initPlayerButtons(){
   var onePlayerButton = document.getElementById('one-player-button');
   var twoPlayersButton = document.getElementById('two-players-button');
   onePlayerButton.addEventListener('click', function(){
-    setUpGame();
+    cpuIsPlayer = true;
+    askXOrY();
   });
   twoPlayersButton.addEventListener('click', function(){
     setUpGame();
@@ -47,11 +94,19 @@ function initPlayerButtons(){
 function markUnit(unit,idNumber){
   if(board[idNumber] === 'empty'){
     if(playerOnesTurn){
-      unit.innerHTML = 'X';
-      board[idNumber] = 'X';
+      if(cpuTurn === playerOnesTurn){
+        cpuMarksUnit();
+      } else {
+        unit.innerHTML = 'X';
+        board[idNumber] = 'X';
+      }
     } else {
-      unit.innerHTML = 'O';
-      board[idNumber] = 'O';
+      if(cpuTurn === playerTwosTurn){
+        cpuMarksUnit();
+      } else {
+        unit.innerHTML = 'O';
+        board[idNumber] = 'O';
+      }
     }
     checkWinCondition();
   }
