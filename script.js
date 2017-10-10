@@ -21,8 +21,73 @@ function changeCPUTurn(){
 }
 
 function cpuMarksUnit(){
+  debugger;
+  if (cpuMark === 'X'){
+    // Mark corner on first turn
+    if(board.one + board.three + board.seven + board.nine === 'emptyemptyemptyempty'){
+      var unitIds = ['one','three','seven','nine'];
+      var randomIndex = Math.floor(Math.random() * 3);
+      var unitId = unitIds[randomIndex];
+
+      board[unitId] = 'X';
+      var unit = document.getElementById(unitId);
+      unit.innerHTML = 'X';
+    } // Mark to win
+              // Check rows
+    else if(board.one + board.two + board.three === 'XemptyX' ||
+              board.four + board.five + board.six === 'XemptyX' ||
+              board.seven + board.eight + board.nine === 'XemptyX' ||
+              // Check columns
+              board.one + board.four + board.seven === 'XemptyX' ||
+              board.two + board.five + board.eight === 'XemptyX' ||
+              board.three + board.six + board.nine === 'XemptyX' ||
+              // Check diagonals
+              board.one + board.five + board.nine === 'XemptyX' ||
+              board.three + board.five + board.seven === 'XemptyX'){
+      var unitIds = ['one','two','three','four','five','six','seven','eight','nine'];
+      for(var i = 0; i<3; i++){
+        // Mark row
+        if(board[unitIds[i]] === 'X' && board[unitIds[i+1]] === 'empty' && board[unitIds[i+2]] === 'X'){
+          board[unitIds[i+1]] = 'X';
+          var unit = document.getElementById(unitIds[i+1]);
+          unit.innerHTML = 'X';
+          break;
+        } // Mark column
+        else if(board[unitIds[i]] === 'X' && board[unitIds[i+3]] === 'empty' && board[unitIds[i+6]] === 'X'){
+          board[unitIds[i+3]] = 'X';
+          var unit = document.getElementById(unitIds[i+3]);
+          unit.innerHTML = 'X';
+          break;
+        } // Mark downward diagonal
+        else if(i+8 <= 8 && board[unitIds[i]] === 'X' && board[unitIds[i+4]] === 'empty' && board[unitIds[i+8]]){
+          board[unitIds[i+4]] = 'X';
+          var unit = document.getElementById(unitIds[i+4]);
+          unit.innerHTML = 'X';
+          break;
+        } else if(board[unitIds[i]] === 'X' && board[unitIds[i+2]] === 'empty' && board[unitIds[i+4]] === 'X'){
+          board[unitIds[i+2]] = 'X';
+          var unit = document.getElementById(unitIds[i+2]);
+          unit.innerHTML = 'X';
+          break;
+        }
+      }
+    } // Mark another corner if user's first move is not in the center
+    else if(board.five !== 'O'){
+      var unitIds = ['one','three','seven','nine'];
+      unitIds = unitIds.filter(function(curr){
+        return board[curr] === 'empty';
+      });
+      var randomIndex = Math.floor(Math.random() * 2);
+      var unitId = unitIds[randomIndex];
+
+      board[unitId] = 'X';
+      var unit = document.getElementById(unitId);
+      unit.innerHTML = 'X';
+    }
+  } else {
+
+  }
   // CPU marks based on map
-  console.log('cpu marks unit');
 }
 
 function askXOrY(){
@@ -67,7 +132,7 @@ function switchTurn(){
   changeCPUTurn();
   if(cpuIsPlayer && cpuTurn){
     cpuMarksUnit();
-    switchTurn();
+    checkWinCondition();
   }
 }
 
@@ -92,6 +157,7 @@ function initPlayerButtons(){
 };
 
 function markUnit(unit,idNumber){
+  debugger;
   if(board[idNumber] === 'empty'){
     if(playerOnesTurn){
       if(cpuTurn === playerOnesTurn){
@@ -123,6 +189,7 @@ function initGameUnits(){
 }
 
 function checkWinCondition(){
+  debugger;
       // Check rows
   if (board.one + board.two + board.three === 'XXX' || board.one + board.two + board.three === 'OOO' ||
       board.four + board.five + board.six === 'XXX' || board.four + board.five + board.six === 'OOO' ||
